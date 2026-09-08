@@ -10,6 +10,8 @@ jobs:
   build-apk:
     name: Build & Export Debug APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repository
@@ -102,20 +104,43 @@ jobs:
             ./gradlew assembleDebug --no-daemon --stacktrace -Djava.awt.headless=true
           fi
 
-      - name: Align Output Path for Artifact Upload
+      - name: Prepare Clean APK for Export
         run: |
-          mkdir -p android/app/build/outputs/apk/debug/
+          mkdir -p dist
           if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
-            cp -f app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/app-debug.apk
-            echo "Copied APK to android/app/build/outputs/apk/debug/app-debug.apk"
+            cp -f "app/build/outputs/apk/debug/app-debug.apk" "dist/AmanFon.apk"
+            echo "Found APK at app/build/outputs/apk/debug/app-debug.apk -> copied to dist/AmanFon.apk"
+          elif [ -f "android/app/build/outputs/apk/debug/app-debug.apk" ]; then
+            cp -f "android/app/build/outputs/apk/debug/app-debug.apk" "dist/AmanFon.apk"
+            echo "Found APK at android/app/build/outputs/apk/debug/app-debug.apk -> copied to dist/AmanFon.apk"
+          else
+            echo "Searching for any generated apk..."
+            find . -name "*.apk" -type f -exec cp -f {} dist/AmanFon.apk \;
           fi
+          ls -lh dist/AmanFon.apk
 
-      - name: Upload Debug APK
+      - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AmanFon-Debug-APK
-          path: |
-            android/app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/debug/app-debug.apk
+          name: AmanFon-APK
+          path: dist/AmanFon.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish Direct APK to GitHub Releases
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v1.0-debug"
+          echo "Publishing direct AmanFon.apk to GitHub Releases for one-click download..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          gh release delete "$TAG" --yes || true
+          git tag -d "$TAG" 2>/dev/null || true
+          git push origin ":refs/tags/$TAG" 2>/dev/null || true
+          gh release create "$TAG" "dist/AmanFon.apk" \
+            --title "AmanFon Debug APK (Direct Download)" \
+            --notes "📥 **تحميل مباشر للـ APK بدون فك ضغط**: قم بالنقر على AmanFon.apk أدناه لتحميله مباشرة وتثبيته على هاتفك فوراً." \
+            --prerelease || echo "GitHub release creation skipped or permissions not granted."
+
