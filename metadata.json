@@ -1,0 +1,6 @@
+{
+  "name": "أمان فون - فحص وبلاغات الهواتف",
+  "description": "تطبيق فحص الـ IMEI والإبلاغ عن الهواتف المسروقة والمفقودة وتتبعها باللغة العربية",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
