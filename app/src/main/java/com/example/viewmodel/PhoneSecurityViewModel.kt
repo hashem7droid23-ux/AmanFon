@@ -179,7 +179,7 @@ class PhoneSecurityViewModel : ViewModel() {
     }
 
     fun reportSighting(reportId: String, shopLocation: String, notes: String) {
-        val nowFormatted = "اليوم - " + java.text.SimpleDateFormat("hh:mm a", java.util.Locale("ar")).format(java.util.Date())
+        val nowFormatted = "اليوم - " + java.text.SimpleDateFormat("hh:mm a", java.util.Locale.forLanguageTag("ar")).format(java.util.Date())
         _uiState.update { current ->
             val updatedReports = current.reports.map { report ->
                 if (report.id == reportId) {

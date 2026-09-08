@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -165,7 +166,7 @@ fun NeonButton(
             disabledContentColor = TextMuted
         ),
         border = if (isSecondary) {
-            ButtonDefaults.outlinedButtonBorder.copy(
+            ButtonDefaults.outlinedButtonBorder(enabled).copy(
                 width = 1.5.dp,
                 brush = Brush.horizontalGradient(listOf(colorAccent, colorAccent.copy(alpha = 0.4f)))
             )

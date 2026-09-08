@@ -19,8 +19,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Description
@@ -176,7 +176,7 @@ fun ReportWizardScreen(
                             contentColor = TextPrimary
                         )
                     ) {
-                        Icon(Icons.Default.ArrowForward, contentDescription = "السابق")
+                        Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "السابق")
                         Spacer(modifier = Modifier.width(6.dp))
                         Text("السابق")
                     }
@@ -187,7 +187,7 @@ fun ReportWizardScreen(
                         text = "التالي",
                         onClick = { onStepChange(currentStep + 1) },
                         modifier = Modifier.weight(if (currentStep == 1) 2f else 1f),
-                        icon = Icons.Default.ArrowBack
+                        icon = Icons.AutoMirrored.Filled.ArrowBack
                     )
                 } else {
                     NeonButton(

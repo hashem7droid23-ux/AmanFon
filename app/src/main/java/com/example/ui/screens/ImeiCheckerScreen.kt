@@ -33,7 +33,7 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -170,7 +170,7 @@ fun ImeiCheckerScreen(
                                 containerColor = DarkSurfaceVariant,
                                 contentColor = NeonCyan
                             ),
-                            border = ButtonDefaults.outlinedButtonBorder.copy(
+                            border = ButtonDefaults.outlinedButtonBorder(!uiState.isScanning).copy(
                                 width = 1.dp,
                                 brush = androidx.compose.ui.graphics.SolidColor(NeonCyan.copy(alpha = 0.5f))
                             )
@@ -469,7 +469,7 @@ fun ImeiCheckerScreen(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = AlertRed)
                 ) {
-                    Icon(Icons.Default.Send, contentDescription = null, modifier = Modifier.size(16.dp))
+                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
                     Text("إرسال التنبيه الآن", color = TextPrimary)
                 }

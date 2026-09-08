@@ -232,7 +232,7 @@ fun TechnicianModeScreen(
                                 containerColor = DarkSurfaceVariant,
                                 contentColor = NeonCyan
                             ),
-                            border = ButtonDefaults.outlinedButtonBorder.copy(
+                            border = ButtonDefaults.outlinedButtonBorder(true).copy(
                                 width = 1.dp,
                                 brush = androidx.compose.ui.graphics.SolidColor(NeonCyan.copy(alpha = 0.5f))
                             )
